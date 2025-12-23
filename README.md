@@ -131,9 +131,10 @@ enterprise-sales-analytics/
    sqlplus SALES_ANALYTICS/password@localhost:1521/XE @database/scripts/install_all.sql
    ```
 
-6. **Prepare sample data**
-   - Place CSV files in `data/input/` directory
-   - CSV format should include: transaction_date, customer_id, product_id, quantity, unit_price, total_amount, region_id (optional)
+6. **Prepare your data (or use sample links below)**
+   - Place your CSV/XLSX files in `data/input/` if using the pipeline scripts
+   - For the Streamlit app, just upload the files directly (multiple files supported)
+   - Optional legacy sales schema for pipeline: transaction_date, customer_id, product_id, quantity, unit_price, total_amount, region_id
 
 ### Running the Pipeline
 
@@ -181,6 +182,11 @@ Features:
 - Generic KPIs and visuals; sales-specific charts appear only if classic sales columns exist
 - Outlier detection (requires a chosen date + numeric column)
 - Dataset narrative summary and data preview
+
+### Sample datasets for testing (XLSX)
+- Product Sales by Region: https://excelx.com/wp-content/uploads/2025/06/Product-Sales-Region.xlsx
+- Online Store Orders: https://excelx.com/wp-content/uploads/2025/06/Online-Store-Orders.xlsx
+- Retail Store Transactions: https://excelx.com/wp-content/uploads/2025/06/Retail-Store-Transactions.xlsx
 
 ### Setting Up Cron Job
 
