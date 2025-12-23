@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Data files (exclude sample)
+data/input/*.csv
+data/input/*.xlsx
+data/archive/*
+!data/input/.gitkeep
+!data/archive/.gitkeep
+
+# Reports (exclude generated)
+reports/charts/*
+reports/summaries/*
+reports/insights/*
+!reports/charts/.gitkeep
+!reports/summaries/.gitkeep
+!reports/insights/.gitkeep
+
+# Logs
+logs/*.log
+!logs/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config (sensitive)
+config.yaml
+!config.yaml.example
+

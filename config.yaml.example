@@ -1,0 +1,28 @@
+# Database Configuration
+database:
+  host: localhost
+  port: 1521
+  service_name: XE
+  username: SALES_ANALYTICS
+  password: your_password_here
+
+# File Paths
+paths:
+  input_data: "data/input"
+  archive_data: "data/archive"
+  reports_charts: "reports/charts"
+  reports_summaries: "reports/summaries"
+  reports_insights: "reports/insights"
+  logs: "logs"
+
+# Logging
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# KPI Thresholds
+kpi_thresholds:
+  revenue_anomaly_percentage: 20
+  top_customers_count: 10
+  trend_detection_periods: 3
+

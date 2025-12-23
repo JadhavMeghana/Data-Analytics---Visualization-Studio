@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ filename }} - Enterprise Sales Analytics{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="fas fa-file-alt"></i> {{ filename }}</h1>
+        <a href="/reports" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Reports
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="fas fa-file-text"></i> Report Content</h5>
+    </div>
+    <div class="card-body">
+        <pre style="white-space: pre-wrap; font-family: 'Courier New', monospace; background: #f8f9fa; padding: 15px; border-radius: 5px; max-height: 600px; overflow-y: auto;">{{ content }}</pre>
+    </div>
+</div>
+{% endblock %}
+

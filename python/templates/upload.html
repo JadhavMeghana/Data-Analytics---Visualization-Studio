@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Data - Enterprise Sales Analytics{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="fas fa-upload"></i> Upload CSV File</h1>
+        <p class="text-muted">Upload sales transaction data in CSV format</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-file-csv"></i> File Upload</h5>
+            </div>
+            <div class="card-body">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select CSV File</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                        <div class="form-text">Maximum file size: 16MB</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Upload File
+                    </button>
+                </form>
+                <div id="uploadStatus" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle"></i> CSV Format</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Required Columns:</strong></p>
+                <ul>
+                    <li>transaction_date</li>
+                    <li>customer_id</li>
+                    <li>product_id</li>
+                    <li>quantity</li>
+                    <li>unit_price</li>
+                    <li>total_amount</li>
+                </ul>
+                <p><strong>Optional Columns:</strong></p>
+                <ul>
+                    <li>region_id</li>
+                    <li>discount_percentage</li>
+                </ul>
+                <hr>
+                <p class="text-muted small">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    Note: Ensure customer_id and product_id exist in the database before uploading.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    const fileInput = document.getElementById('file');
+    const statusDiv = document.getElementById('uploadStatus');
+    
+    if (!fileInput.files[0]) {
+        statusDiv.innerHTML = '<div class="alert alert-danger">Please select a file.</div>';
+        return;
+    }
+    
+    formData.append('file', fileInput.files[0]);
+    
+    statusDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Uploading...</div>';
+    
+    try {
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            statusDiv.innerHTML = `<div class="alert alert-success"><i class="fas fa-check-circle"></i> ${data.message}</div>`;
+            fileInput.value = '';
+        } else {
+            statusDiv.innerHTML = `<div class="alert alert-danger"><i class="fas fa-times-circle"></i> ${data.error}</div>`;
+        }
+    } catch (error) {
+        statusDiv.innerHTML = `<div class="alert alert-danger"><i class="fas fa-times-circle"></i> Upload failed: ${error.message}</div>`;
+    }
+});
+</script>
+{% endblock %}
+

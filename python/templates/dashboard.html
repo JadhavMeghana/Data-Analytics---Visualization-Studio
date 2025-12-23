@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive Dashboard - Enterprise Sales Analytics{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="fas fa-chart-bar"></i> Interactive Dashboard</h1>
+        <p class="text-muted">Explore your sales analytics with interactive visualizations</p>
+    </div>
+</div>
+
+{% if dashboard_file %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="fas fa-chart-line"></i> Sales Analytics Dashboard</h5>
+    </div>
+    <div class="card-body p-0">
+        <iframe src="/view_chart/{{ dashboard_file }}" 
+                style="width: 100%; height: 800px; border: none;"></iframe>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-warning">
+    <h4><i class="fas fa-exclamation-triangle"></i> No Dashboard Available</h4>
+    <p>Please run the analytics pipeline first to generate the interactive dashboard.</p>
+    <a href="/run_demo" class="btn btn-primary" onclick="runDemo(event)">
+        <i class="fas fa-play"></i> Run Demo Mode
+    </a>
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle"></i> Dashboard Features</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>Interactive Charts:</strong> Zoom, pan, and hover over data points</li>
+                    <li><strong>Multiple Visualizations:</strong> Revenue by region and monthly trends</li>
+                    <li><strong>Export Options:</strong> Download charts as images</li>
+                    <li><strong>Real-time Data:</strong> View latest calculated KPIs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function runDemo(event) {
+    event.preventDefault();
+    if (confirm('This will run the demo mode and generate new reports. Continue?')) {
+        fetch('/run_demo')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Demo mode executed successfully! Page will refresh.');
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            });
+    }
+}
+</script>
+{% endblock %}
+
